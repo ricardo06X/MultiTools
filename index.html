@@ -24,6 +24,10 @@
         /* Estilos específicos - CNPJ */
         .label-cnpj { font-size: 0.65rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
         .value-cnpj { font-size: 0.95rem; font-weight: 600; color: #f1f5f9; }
+
+        /* Estilos - Econômico */
+        .valor-alta { color: #10b981; } /* Verde Tailwind */
+        .valor-baixa { color: #ef4444; } /* Vermelho Tailwind */
     </style>
 </head>
 <body>
@@ -41,6 +45,9 @@
             </button>
             <button onclick="switchMainTab('hp12c')" id="main-tab-hp12c" class="px-6 py-4 font-bold whitespace-nowrap text-slate-500 transition-colors hover:text-blue-400">
                 <i class="fa-solid fa-calculator mr-2"></i>Emulador HP-12C
+            </button>
+            <button onclick="switchMainTab('financas')" id="main-tab-financas" class="px-6 py-4 font-bold whitespace-nowrap text-slate-500 transition-colors hover:text-blue-400">
+                <i class="fa-solid fa-coins mr-2"></i>Econômico
             </button>
         </div>
     </nav>
@@ -179,7 +186,83 @@
                     <i class="fa-solid fa-shield-check mr-1"></i> Conexão segura (HTTPS) restabelecida e 100% garantida.
                 </p>
             </div>
+        </div>
+
+        <div id="app-financas" class="main-tab-content max-w-5xl mx-auto">
+            <header class="text-center mb-10 relative">
+                <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500 mb-2">
+                    Painel Econômico
+                </h1>
+                <p class="text-slate-400">Cotações em Tempo Real e Taxas Oficiais</p>
+                <button onclick="carregarDadosFinanceiros()" class="absolute right-0 top-0 bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl transition-all border border-slate-600 flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-arrows-rotate"></i> Atualizar
+                </button>
+            </header>
+
+            <div id="loading-financas" class="hidden text-center py-10">
+                <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-emerald-500 mx-auto"></div>
+                <p class="text-emerald-400 text-sm mt-3 animate-pulse">Sincronizando com Banco Central e Mercados...</p>
             </div>
+
+            <div id="conteudo-financas" class="space-y-8 hidden animate-fadeIn">
+                
+                <section>
+                    <h2 class="text-xl font-bold text-slate-200 mb-4 flex items-center border-b border-slate-700 pb-2">
+                        <i class="fa-solid fa-money-bill-transfer text-emerald-500 mr-2"></i> Câmbio e Cripto (Hoje)
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass p-6 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fa-solid fa-dollar-sign text-6xl text-emerald-500"></i></div>
+                            <p class="text-slate-400 font-bold text-sm uppercase mb-1">Dólar Comercial (USD)</p>
+                            <p class="text-4xl font-black text-white" id="val-usd">R$ 0,00</p>
+                            <p class="text-sm font-semibold mt-2" id="var-usd">0.00%</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fa-solid fa-euro-sign text-6xl text-emerald-500"></i></div>
+                            <p class="text-slate-400 font-bold text-sm uppercase mb-1">Euro (EUR)</p>
+                            <p class="text-4xl font-black text-white" id="val-eur">R$ 0,00</p>
+                            <p class="text-sm font-semibold mt-2" id="var-eur">0.00%</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fa-brands fa-bitcoin text-6xl text-emerald-500"></i></div>
+                            <p class="text-slate-400 font-bold text-sm uppercase mb-1">Bitcoin (BTC)</p>
+                            <p class="text-3xl font-black text-white" id="val-btc">R$ 0,00</p>
+                            <p class="text-sm font-semibold mt-2" id="var-btc">0.00%</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-slate-200 mb-4 flex items-center border-b border-slate-700 pb-2 mt-8">
+                        <i class="fa-solid fa-building-columns text-emerald-500 mr-2"></i> Taxas Oficiais (Banco Central)
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border-l-4 border-emerald-500 shadow-md">
+                            <p class="text-slate-400 font-bold text-sm uppercase mb-1">Taxa Selic</p>
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold text-emerald-400" id="val-selic">0,00</p>
+                                <span class="text-slate-500 font-bold">% ao ano</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border-l-4 border-blue-500 shadow-md">
+                            <p class="text-slate-400 font-bold text-sm uppercase mb-1">Taxa CDI</p>
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold text-blue-400" id="val-cdi">0,00</p>
+                                <span class="text-slate-500 font-bold">% ao ano</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border-l-4 border-purple-500 shadow-md">
+                            <p class="text-slate-400 font-bold text-sm uppercase mb-1">IPCA (Inflação)</p>
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold text-purple-400" id="val-ipca">0,00</p>
+                                <span class="text-slate-500 font-bold">% acumulado</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
 
     </main>
 
@@ -212,6 +295,10 @@
 
             if (tabId === 'feriado' && document.getElementById('feriados-grid').innerHTML === '') {
                 carregarFeriados();
+            }
+            // Carrega os dados financeiros automaticamente se a aba for aberta e os valores estiverem zerados
+            if (tabId === 'financas' && document.getElementById('val-usd').innerText === 'R$ 0,00') {
+                carregarDadosFinanceiros();
             }
         }
 
@@ -669,12 +756,85 @@
            LÓGICA - HP12C (POP-UP ESTÁCIO)
            ========================================== */
         function abrirHP12CEstacio() {
-            // Abre uma nova janela limpa com medidas ideais para a calculadora da Estácio
             window.open(
                 'https://simulado.estacio.br/img/Hp/', 
                 'CalculadoraHP12CEstacio', 
                 'width=650,height=450,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no'
             );
+        }
+
+        /* ==========================================
+           LÓGICA - PAINEL ECONÔMICO (COTAÇÕES E TAXAS)
+           ========================================== */
+        async function carregarDadosFinanceiros() {
+            const loading = document.getElementById('loading-financas');
+            const conteudo = document.getElementById('conteudo-financas');
+            
+            loading.classList.remove('hidden');
+            conteudo.classList.add('hidden');
+
+            try {
+                // Dispara as duas chamadas de API ao mesmo tempo para ser mais rápido
+                await Promise.all([buscarCotacoes(), buscarTaxas()]);
+            } catch (error) {
+                console.error("Erro ao carregar dados financeiros", error);
+            } finally {
+                loading.classList.add('hidden');
+                conteudo.classList.remove('hidden');
+            }
+        }
+
+        async function buscarCotacoes() {
+            try {
+                const res = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL');
+                const data = await res.json();
+
+                atualizarCardCotacao('usd', data.USDBRL);
+                atualizarCardCotacao('eur', data.EURBRL);
+                atualizarCardCotacao('btc', data.BTCBRL);
+            } catch (error) {
+                console.error("Falha ao buscar cotações");
+            }
+        }
+
+        function atualizarCardCotacao(id, moeda) {
+            const valEl = document.getElementById(`val-${id}`);
+            const varEl = document.getElementById(`var-${id}`);
+            
+            // Formata o valor principal como moeda (BRL)
+            const valorNumerico = parseFloat(moeda.bid);
+            valEl.innerText = valorNumerico.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            // Aplica cor e ícone na variação (Positivo Verde / Negativo Vermelho)
+            const variacao = parseFloat(moeda.pctChange);
+            if (variacao > 0) {
+                varEl.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> +${variacao}% no dia`;
+                varEl.className = "text-sm font-semibold mt-2 valor-alta";
+            } else if (variacao < 0) {
+                varEl.innerHTML = `<i class="fa-solid fa-arrow-trend-down"></i> ${variacao}% no dia`;
+                varEl.className = "text-sm font-semibold mt-2 valor-baixa";
+            } else {
+                varEl.innerHTML = `<i class="fa-solid fa-minus"></i> ${variacao}% no dia`;
+                varEl.className = "text-sm font-semibold mt-2 text-slate-400";
+            }
+        }
+
+        async function buscarTaxas() {
+            try {
+                const res = await fetch('https://brasilapi.com.br/api/taxas/v1');
+                const taxas = await res.json();
+                
+                taxas.forEach(taxa => {
+                    const nomeStr = taxa.nome.toLowerCase();
+                    const el = document.getElementById(`val-${nomeStr}`);
+                    if (el) {
+                        // Formata a taxa com vírgula e 2 casas decimais
+                        el.innerText = parseFloat(taxa.valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    }
+                });
+            } catch (error) {
+                console.error("Falha ao buscar taxas do Banco Central");
+            }
         }
 
         // Inicializa a primeira aba
