@@ -6,8 +6,7 @@
     <title>Multi-Ferramentas Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://vichinsky.com.br/hp12c/hp12c.js" type="text/javascript"></script> 
-
+    
     <style>
         /* Estilos Globais e de Abas Principais */
         body { background-color: #0f172a; color: #f1f5f9; font-family: sans-serif; min-height: 100vh; margin: 0; }
@@ -25,24 +24,6 @@
         /* Estilos específicos - CNPJ */
         .label-cnpj { font-size: 0.65rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
         .value-cnpj { font-size: 0.95rem; font-weight: 600; color: #f1f5f9; }
-
-        /* Estilos específicos - HP12C */
-        #hp12c-container-wrapper {
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 70vh; background-color: transparent; 
-            border-radius: 1rem; overflow: hidden; position: relative;
-        }
-        #hp12c_controls {
-            position: absolute; top: 20px; background-color: #1e293b; color: #ffffff; 
-            padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
-            display: flex; align-items: center; gap: 10px; z-index: 100;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        #pointer_div {
-            transform: scale(1.2); transform-origin: center center;
-            transition: transform 0.1s ease-out;
-            clip-path: inset(2px round 5px);
-        }
     </style>
 </head>
 <body>
@@ -171,142 +152,19 @@
         </div>
 
         <div id="app-hp12c" class="main-tab-content max-w-5xl mx-auto">
-            
-            <div id="hp12c-container-wrapper">
-                <div id="hp12c_controls">
-                    <label for="zoom_slider"><strong>Zoom:</strong></label>
-                    <input type="range" id="zoom_slider" min="0.5" max="2.5" step="0.1" value="1.2" style="cursor: pointer;">
-                    <span id="zoom_value">120%</span>
+            <header class="text-center mb-8">
+                <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500 mb-2">
+                    Emulador HP-12C
+                </h1>
+                <p class="text-slate-500 text-sm">Calculadora Financeira Integrada (Open Source)</p>
+            </header>
+
+            <div class="glass border border-slate-700 p-2 sm:p-6 rounded-3xl shadow-2xl flex justify-center">
+                
+                <div class="w-full max-w-2xl bg-[#222222] rounded-2xl overflow-hidden flex justify-center border border-slate-800" style="height: 480px;">
+                    <iframe src="https://duarch.github.io/hp12/" style="width: 100%; height: 100%; border: none;"></iframe>
                 </div>
-
-                <div id="pointer_div" style="position: relative; height: 282px; width: 450px;">
-                    <img src="https://vichinsky.com.br/hp12c/hp12c.jpg" style="position: absolute; left: 0px; top:0px;" id="cross" onclick="key_pressed(event)" alt="">
-                    <div style="z-index:1; position:absolute; left: 87px; top:24px; font-weight: bold; font-size: 16px; font-family: sans-serif; color: black;">
-                    <span id="display"></span>
-                    </div>
-                    <div style="z-index:1; position:absolute; left: 90px; top:48px; font-size: 9px; font-family: sans-serif; color: black;">
-                    <span id="modifier"></span>
-                    </div>
-                    <div style="z-index:1; position:absolute; left: 193px; top:48px; font-size: 9px; font-family: sans-serif; color: black;">
-                    <span id="begin"></span>
-                    </div>
-                    <div style="z-index:1; position:absolute; left: 231px; top:48px; font-size: 9px; font-family: sans-serif; color: black;">
-                    <span id="dmyc"></span>
-                    </div>
-                    <div style="z-index:1; position:absolute; left: 141px; top:48px; font-size: 9px; font-family: sans-serif; color: black;">
-                    <span id="pgrm"></span>
-                    </div>
-
-                    <img id="lcd0a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 89px;">
-                    <img id="lcd0e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 89px;">
-                    <img id="lcd0t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 89px;">
-
-                    <img id="lcd1a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 107px;">
-                    <img id="lcd1b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 107px;">
-                    <img id="lcd1c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 107px;">
-                    <img id="lcd1d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 107px;">
-                    <img id="lcd1e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 107px;">
-                    <img id="lcd1f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 107px;">
-                    <img id="lcd1g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 107px;">
-                    <img id="lcd1p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 107px;">
-                    <img id="lcd1t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 107px;">
-
-                    <img id="lcd2a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 125px;">
-                    <img id="lcd2b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 125px;">
-                    <img id="lcd2c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 125px;">
-                    <img id="lcd2d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 125px;">
-                    <img id="lcd2e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 125px;">
-                    <img id="lcd2f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 125px;">
-                    <img id="lcd2g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index: 1; position: absolute; top: 30px; visibility: visible; left: 125px;">
-                    <img id="lcd2p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 125px;">
-                    <img id="lcd2t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 125px;">
-
-                    <img id="lcd3a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-                    <img id="lcd3t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 143px;">
-
-                    <img id="lcd4a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-                    <img id="lcd4t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 161px;">
-
-                    <img id="lcd5a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-                    <img id="lcd5t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 179px;">
-
-                    <img id="lcd6a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-                    <img id="lcd6t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 197px;">
-
-                    <img id="lcd7a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-                    <img id="lcd7t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 215px;">
-
-                    <img id="lcd8a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-                    <img id="lcd8t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 233px;">
-
-                    <img id="lcd9a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-                    <img id="lcd9t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 251px;">
-
-                    <img id="lcd10a" src="https://vichinsky.com.br/hp12c/lcd/lcda.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10b" src="https://vichinsky.com.br/hp12c/lcd/lcdb.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10c" src="https://vichinsky.com.br/hp12c/lcd/lcdc.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10d" src="https://vichinsky.com.br/hp12c/lcd/lcdd.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10e" src="https://vichinsky.com.br/hp12c/lcd/lcde.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10f" src="https://vichinsky.com.br/hp12c/lcd/lcdf.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10g" src="https://vichinsky.com.br/hp12c/lcd/lcdg.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10p" src="https://vichinsky.com.br/hp12c/lcd/lcdp.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                    <img id="lcd10t" src="https://vichinsky.com.br/hp12c/lcd/lcdt.gif" alt="" style="z-index:1; position:absolute; top: 30px; visibility: hidden; left: 269px;">
-                </div>
+                
             </div>
         </div>
 
@@ -315,18 +173,13 @@
     <script>
         /* ==========================================
            PROTEÇÃO DOS CAMPOS DE TEXTO E ENTER
-           Evita que o emulador roube a digitação.
            ========================================== */
         document.addEventListener('keydown', function(e) {
-            if(e.target.tagName === 'INPUT') {
-                e.stopPropagation();
-            }
+            if(e.target.tagName === 'INPUT') e.stopPropagation();
         }, true);
         
         document.addEventListener('keypress', function(e) {
-            if(e.target.tagName === 'INPUT') {
-                e.stopPropagation();
-            }
+            if(e.target.tagName === 'INPUT') e.stopPropagation();
         }, true);
 
         /* ==========================================
@@ -703,26 +556,8 @@
             if (e.key === 'Enter') carregarFeriados();
         });
 
-        /* ==========================================
-           LÓGICA - HP12C E INICIALIZAÇÃO
-           ========================================== */
+        // Inicializa a primeira aba ao carregar a página
         document.addEventListener("DOMContentLoaded", function() {
-            if (typeof Init_hp12c === "function") {
-                Init_hp12c();
-            }
-            
-            const slider = document.getElementById('zoom_slider');
-            const zoomText = document.getElementById('zoom_value');
-            const calculator = document.getElementById('pointer_div');
-
-            if(slider && zoomText && calculator) {
-                slider.addEventListener('input', function() {
-                    const scaleValue = this.value;
-                    calculator.style.transform = `scale(${scaleValue})`;
-                    zoomText.textContent = `${Math.round(scaleValue * 100)}%`;
-                });
-            }
-            
             switchMainTab('cep');
         });
     </script>
